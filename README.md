@@ -1,4 +1,4 @@
-# 시의 마음결 — 한국 시 15편 감정 분석 웹앱
+# 한국 시 15편 감정 분석 웹앱
 
 감성컴퓨팅(2026학년도 2학기) 개인 과제. 저작권이 끝난 한국 시 15편의 감정을 **감정 사전**과 **문학적 해석 프로필**로 계산하고, 결과를 시각화하는 정적 웹앱입니다.
 
@@ -8,8 +8,8 @@
 
 ## 1. 웹앱 주소와 사용법
 
-- **웹앱:** https://<아이디>.github.io/korean-poetry-emotion-map/
-- **저장소:** https://github.com/<아이디>/korean-poetry-emotion-map
+- **웹앱:** https://lsoyeno.github.io/korean-poetry-emotion-map/
+- **저장소:** https://github.com/lsoyeno/korean-poetry-emotion-map
 
 설치나 로그인 없이 PC와 휴대폰 브라우저에서 열립니다. `index.html`을 내려받아 더블클릭해도 동작합니다.
 
@@ -152,8 +152,8 @@
 |---|---|---|
 | Claude (Anthropic) | 예시 앱 코드를 파일로 나누고 기능 보완(감지 없음 안내, 빈 입력 처리, 합계 100% 반올림, 분석 방법 비교 표, 결과 JSON 내보내기, 출처 표시), 감정 범주 정의·사전 수정·예외 목록·15편 해석과 정서 프로필·검증 사례 초안 작성 | TODO: 해석과 검증 사례를 직접 검토하고 고친 내용, 시 본문 대조 결과를 적기 |
 
-- 새 작품 5편의 본문은 위키문헌에서 가져왔고, 해석은 Claude 초안을 바탕으로 했습니다.
-- 코드는 수업 예시 앱 [seokhee5hs/korean-poetry-emotion-map](https://github.com/seokhee5hs/korean-poetry-emotion-map)을 바탕으로 수정했습니다.
+- 새 작품 5편의 본문은 위키문헌에서 가져왔고, 분석 및 웹 제작은 Claude 초안을 바탕으로 했습니다.
+- 코드는 수업 예시 앱을 바탕으로 수정했습니다.
 
 ---
 
