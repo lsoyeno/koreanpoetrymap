@@ -1,13 +1,13 @@
 # 시의 마음결 — 한국 시 15편 감정 분석 웹앱
 
-감성컴퓨팅 과제 저작권이 끝난 한국 시 15편의 감정을 **감정 사전**과 **문학적 해석 프로필**로 계산하고, 결과를 시각화하는 정적 웹앱입니다.
+감성컴퓨팅 과제 저작권이 끝난 한국 시 15편의 감정을 **감정 사전**과 **문학적 해석 프로필**로 계산하고 결과를 시각화하는 정적 웹앱입니다.
 
 
 ---
 
 ## 1. 웹앱 주소와 사용법
 
-- **웹앱:** https://<아이디>.github.io/korean-poetry-emotion-map/
+- **웹앱:** https://lsoyeno.github.io/koreanpoetrymap/
 - **저장소:** https://github.com/lsoyeno/korean-poetry-emotion-map
 
 설치나 로그인 없이 PC와 휴대폰 브라우저에서 열립니다. `index.html`을 내려받아 더블클릭해도 동작합니다.
