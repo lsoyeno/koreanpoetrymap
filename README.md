@@ -152,7 +152,6 @@
 |---|---|---|
 | Claude (Anthropic) | 예시 앱 코드를 파일로 나누고 기능 보완(감지 없음 안내, 빈 입력 처리, 합계 100% 반올림, 분석 방법 비교 표, 결과 JSON 내보내기, 출처 표시), 감정 범주 정의·사전 수정·예외 목록·15편 해석과 정서 프로필·검증 사례 초안 작성 | TODO: 해석과 검증 사례를 직접 검토하고 고친 내용, 시 본문 대조 결과를 적기 |
 
-- 시 본문은 AI가 만든 글이 아니라 예시 앱과 교과서 원문을 사용했습니다.
 - 새 작품 5편의 본문은 위키문헌에서 가져왔고, 해석은 Claude 초안을 바탕으로 했습니다.
 - 코드는 수업 예시 앱 [seokhee5hs/korean-poetry-emotion-map](https://github.com/seokhee5hs/korean-poetry-emotion-map)을 바탕으로 수정했습니다.
 
@@ -171,10 +170,3 @@ js/data.js      감정 범주(EMOS), 감정 사전(LEX), 시(POEMS) ← 주로 �
 js/app.js       분석 엔진과 차트·다이어그램·이미지
 .nojekyll       GitHub Pages가 파일을 그대로 배포하도록 하는 설정
 ```
-
-## 배포 방법
-
-1. GitHub에서 **Public** 저장소 `korean-poetry-emotion-map`을 만듭니다.
-2. 이 폴더의 파일을 모두 올립니다(웹에서 *Add file → Upload files*로 끌어다 놓거나 `git push`).
-3. **Settings → Pages → Branch: `main` / `/ (root)` → Save**를 누릅니다.
-4. 1–2분 뒤 `https://<아이디>.github.io/korean-poetry-emotion-map/`이 열리는지 확인합니다. 안 열리면 Actions 탭에서 *pages build and deployment*가 성공했는지 봅니다.
