@@ -7,7 +7,7 @@
 ## 1. 웹앱 주소와 사용법
 
 - **웹앱:** https://<아이디>.github.io/korean-poetry-emotion-map/
-- **저장소:** https://github.com/<아이디>/korean-poetry-emotion-map
+- **저장소:** https://github.com/lsoyeno/koreanpoetrymap
 
 설치나 로그인 없이 PC와 휴대폰 브라우저에서 열립니다. `index.html`을 내려받아 더블클릭해도 동작합니다.
 
