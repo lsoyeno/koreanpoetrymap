@@ -54,12 +54,12 @@ const legendHTML=idx=>idx.map(i=>`<span><i style="background:${EMOS[i].c}"></i>$
 /* ---------- 6. 렌더링 ---------- */
 function renderShelf(){
   $('shelf').innerHTML=all().map(p=>{const fv=finalVec(p);const d=topIdx(fv)[0];
-    return `<li><button type="button" data-id="${p.id}" aria-current="${p.id===selId}"><span class="dot" style="background:${isEmpty(fv)?'var(--line)':EMOS[d].c}"></span><span class="t">${esc(p.title)}<span class="p">${esc(p.poet)}${p.year?' · '+p.year:''}</span></span></button></li>`}).join('');
+    return `<li><button type="button" data-id="${p.id}" aria-current="${p.id===selId}"><span class="dot" style="background:${isEmpty(fv)?'var(--line)':EMOS[d].c}"></span><span class="t">${esc(p.title)}</span><span class="lead" aria-hidden="true"></span><span class="p">${esc(p.poet)}</span></button></li>`}).join('');
   $('shelf').querySelectorAll('button').forEach(b=>b.onclick=()=>select(b.dataset.id));
 }
 function renderPoem(p){
   $('ptitle').textContent=p.title;
-  $('pmeta').innerHTML=`${esc(p.poet)}${p.year?' · '+esc(p.year)+'년 발표':''}${p.poetDeath?` · 시인 ${p.poetDeath}년 사망`:''}`+(p.source?`<span class="src">출처: ${esc(p.source)}</span>`:'');
+  $('pmeta').innerHTML=`${esc(p.poet)}${p.year?`, ${esc(p.year)}년 발표`:''}${p.poetDeath?` (시인 ${p.poetDeath}년 사망)`:''}`+(p.source?`<span class="src">출처: ${esc(p.source)}</span>`:'');
   const stanzas=p.text.split(/\n\s*\n/);
   $('ptext').innerHTML=stanzas.map(s=>'<p>'+s.split('\n').map(l=>{
     const h=esc(l.trim()).replace(KWRE,m=>{const i=KWMAP.get(m);if(i<0)return m;return `<mark class="kw" style="--c:${EMOS[i].c}" tabindex="0" data-tip="<b>${m}</b> → ${EMOS[i].name}">${m}</mark>`});
@@ -67,6 +67,7 @@ function renderPoem(p){
   const used=[...new Set(p.lex.words.map(w=>w.i))].sort((a,b)=>a-b);
   $('kwlegend').innerHTML=used.length?'<span style="color:var(--muted)">밑줄 시어:</span>'+legendHTML(used):'<span>감정 사전과 일치하는 시어가 없습니다.</span>';
   bindTips($('ptext'));
+  const el=$('ptext');if(el.dataset.id!==p.id){el.dataset.id=p.id;el.classList.remove('fresh');void el.offsetWidth;el.classList.add('fresh')}
 }
 function renderSummary(p,v,recs){
   const t=topIdx(v);const d=t[0];const P=pctList(v);
@@ -241,7 +242,7 @@ function renderHeat(p){
   const ps=all();let h='<thead><tr><th></th>'+EMOS.map(e=>`<th><i style="background:${e.c}"></i>${e.name}</th>`).join('')+'</tr></thead><tbody>';
   ps.forEach(q=>{const v=finalVec(q);h+=`<tr data-id="${q.id}" class="${q.id===p.id?'sel':''}"><th class="rowh" scope="row">${esc(q.title)}</th>`+
     v.map((x,i)=>{const s=Math.min(100,Math.round(x/.45*100));const dark=s>55;
-      return `<td style="background:color-mix(in oklab,var(--seq) ${s}%,var(--surface));color:${dark?'#fff':'var(--ink-2)'}" data-tip="<b>${esc(q.title)}</b> · ${EMOS[i].name} ${pct(x)}%">${pct(x)}</td>`}).join('')+'</tr>'});
+      return `<td style="background:color-mix(in oklab,var(--seq) ${s}%,var(--surface));color:var(--ink)" data-tip="<b>${esc(q.title)}</b> · ${EMOS[i].name} ${pct(x)}%">${pct(x)}</td>`}).join('')+'</tr>'});
   $('heat').innerHTML=h+'</tbody>';
   $('heat').querySelectorAll('tbody tr').forEach(r=>r.onclick=()=>select(r.dataset.id));
   bindTips($('heat'));
