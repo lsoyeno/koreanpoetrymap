@@ -54,7 +54,7 @@
 - 모든 시인은 1962년 이전에 세상을 떠났습니다. 정지용의 사망 연도는 한국전쟁 중 납북 뒤 1950년 사망으로 보는 통설을 따랐습니다.
 - 본문 대조 결과는 아래 **2.1**에 있습니다.
 
-### 2.1 본문 대조 결과 (T-07)
+### 2.1 본문 대조 결과
 
 새 작품 5편은 위키문헌 페이지와 한 행씩 대조했습니다. 「쉽게 씌어진 시」와 「참회록」은 위키문헌에 1948년 초판의 원문 표기(한자 섞임, 옛 맞춤법)로 실려 있어, 웹앱에는 현대 표기로 옮긴 판본을 쓰고 출처에 그 사실을 적었습니다.
 
@@ -219,10 +219,3 @@ js/data.js      감정 범주(EMOS), 감정 사전(LEX), 시(POEMS) ← 주로 �
 js/app.js       분석 엔진과 차트·다이어그램·이미지
 .nojekyll       GitHub Pages가 파일을 그대로 배포하도록 하는 설정
 ```
-
-## 배포 방법
-
-1. GitHub에서 **Public** 저장소 `korean-poetry-emotion-map`을 만듭니다.
-2. 이 폴더의 파일을 모두 올립니다(웹에서 *Add file → Upload files*로 끌어다 놓거나 `git push`).
-3. **Settings → Pages → Branch: `main` / `/ (root)` → Save**를 누릅니다.
-4. 1–2분 뒤 `https://<아이디>.github.io/korean-poetry-emotion-map/`이 열리는지 확인합니다. 안 열리면 Actions 탭에서 *pages build and deployment*가 성공했는지 봅니다.
