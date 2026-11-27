@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="저작권이 끝난 한국 시 15편의 감정을 감정 사전과 문학적 해석으로 분석하는 웹앱">
+<title>시의 마음결 · 한국 시 감정 분석</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Song+Myung&family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="css/style.css">
+
+
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1><small>감성컴퓨팅 2026-2 · 한국 시 감정 분석 웹앱</small>시의 마음결</h1>
+    <p>한국 시 <span data-count>15</span>편의 정서를 8개 감정 범주로 나누어 감정 사전과 문학적 해석으로 함께 계산합니다. 왼쪽에서 시를 고르면 감정 비율, 행별 흐름, 시어–감정–주제 다이어그램, 비슷한 감성의 시가 함께 바뀝니다.</p>
+  </header>
+
+  <div class="app">
+    <aside>
+      <div>
+        <p class="label">시 목록</p>
+        <ul class="shelf" id="shelf"></ul>
+      </div>
+      <div class="ctrl">
+        <p class="label" style="margin:0">분석 가중치</p>
+        <label for="w">감정 사전 반영 비율 <b id="wv">40%</b></label>
+        <input type="range" id="w" min="0" max="100" step="10" value="40">
+        <div class="row"><span>해석 중심</span><span>사전 중심</span></div>
+        <p class="hint">최종 점수 = 해석 기반 프로필 × (1−w) + 감정 사전 점수 × w</p>
+      </div>
+      <form class="mine" id="mine">
+        <p class="label" style="margin:0">내 시 분석하기</p>
+        <input id="mtitle" placeholder="제목" value="엄마야 누나야">
+        <textarea id="mtext" aria-label="시 본문">엄마야 누나야 강변 살자
+뜰에는 반짝이는 금모래 빛
+뒷문 밖에는 갈잎의 노래
+엄마야 누나야 강변 살자</textarea>
+        <button class="btn" type="submit">분석하기</button>
+        <p class="warn" id="mineMsg" role="alert" hidden></p>
+        <p class="hint">직접 입력한 시는 감정 사전으로만 분석하고, 수록 작품 중 가장 비슷한 시를 추천합니다.</p>
+      </form>
+    </aside>
+
+    <main id="main">
+      <section class="sheet hero">
+        <div class="poem">
+          <h2 id="ptitle"></h2>
+          <div class="meta" id="pmeta"></div>
+          <div class="text" id="ptext"></div>
+          <div class="legend" id="kwlegend"></div>
+        </div>
+        <div class="summary">
+          <div>
+            <p class="label">지배 정서</p>
+            <div class="dominant" id="dominant"></div>
+          </div>
+          <div class="bars" id="bars"></div>
+          <dl class="facts" id="facts"></dl>
+          <div>
+            <p class="label">감상과 해석</p>
+            <p class="interp" id="interp"></p>
+          </div>
+          <blockquote class="key" id="keyline"></blockquote>
+        </div>
+      </section>
+
+      <section class="grid2">
+        <div class="sheet">
+          <div class="sec-h"><h3>감정 프로필</h3><p>8개 정서, 비율(%)</p></div>
+          <div id="radar"></div>
+          <div class="legend" id="radarLegend"></div>
+        </div>
+        <div class="sheet">
+          <div class="sec-h"><h3>행별 감정 흐름</h3><p>각 행에서 감지된 시어 수</p></div>
+          <div class="scroll" id="flow"></div>
+          <div class="legend" id="flowLegend"></div>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="sec-h"><h3>최종 분석 다이어그램</h3><p>시어 → 감정 → 주제로 이어지는 의미 구조</p></div>
+        <div class="scroll" id="sankey"></div>
+      </section>
+
+      <section class="sheet">
+        <div class="sec-h"><h3>분석 방법 비교 · 검증</h3><p>감정 사전만 쓸 때와 해석 프로필만 쓸 때의 차이</p></div>
+        <div class="scroll" id="compare"></div>
+        <p class="cmp-note" id="cmpNote"></p>
+      </section>
+
+      <section class="sheet" id="imgSec">
+        <div class="sec-h"><h3>감정 이미지</h3><p>분석한 감정과 시의 소재로 그림을 만듭니다</p></div>
+        <div class="tabs" role="tablist" aria-label="이미지 생성 방식">
+          <button type="button" role="tab" id="tabArt" aria-selected="true">감정 수묵화 · 브라우저에서 생성</button>
+          <button type="button" role="tab" id="tabAI" aria-selected="false">AI 이미지 · 무료</button>
+        </div>
+        <div class="imgwrap">
+          <div class="frame">
+            <canvas id="art" width="900" height="1200" role="img" aria-label="시의 감정을 표현한 그림"></canvas>
+            <img id="aiImg" alt="AI가 생성한 시 이미지" hidden>
+            <div class="aistate" id="aiState" hidden></div>
+          </div>
+          <div class="imgside">
+            <div id="artPanel" style="display:flex;flex-direction:column;gap:14px">
+              <p class="label" style="margin:0">그림의 구성</p>
+              <dl class="facts" id="artFacts"></dl>
+              <div class="btnrow"><button type="button" class="btn" id="redraw">다시 그리기</button><button type="button" class="btn ghost" id="saveArt">PNG로 저장</button></div>
+              <p class="hint">계정이나 설치 없이 브라우저가 직접 그립니다. 감정 비율이 색의 양을, 시에 나온 소재(달·별·꽃·길·물 등)가 화면의 사물을 정합니다. ‘다시 그리기’를 누를 때마다 구도가 바뀝니다.</p>
+            </div>
+            <div id="aiPanel" hidden style="display:flex;flex-direction:column;gap:12px">
+              <p class="label" style="margin:0">Gemini로 만들기 · 무료 Google 계정</p>
+              <ol class="steps">
+                <li><b>프롬프트 복사 후 Gemini 열기</b>를 누릅니다.</li>
+                <li>새 탭의 Gemini 입력창에 붙여 넣고(Ctrl+V) 보냅니다.</li>
+                <li>완성된 그림을 내려받은 뒤 <b>이미지 불러오기</b>로 가져오면 이 자리에 나타납니다. 수묵화 탭과 오가며 비교해 보세요.</li>
+              </ol>
+              <label class="label" for="prompt" style="margin:0">프롬프트 (고쳐 써도 됩니다)</label>
+              <textarea id="prompt"></textarea>
+              <div class="btnrow">
+                <a class="btn" id="openGemini" href="https://gemini.google.com/app" target="_blank" rel="noopener">프롬프트 복사 후 Gemini 열기</a>
+                <button type="button" class="btn ghost" id="copyPrompt">프롬프트만 복사</button>
+              </div>
+              <div class="btnrow">
+                <label class="btn ghost" for="upImg" tabindex="0">이미지 불러오기</label>
+                <input type="file" id="upImg" accept="image/*" hidden>
+                <button type="button" class="btn ghost" id="genAI">빠른 생성 (Pollinations · 품질 낮음)</button>
+              </div>
+              <p class="hint" id="aiNote">Gemini 앱은 무료 Google 계정으로 하루 몇 장까지 그림을 만들 수 있고, 하루 한도는 Google 정책에 따라 바뀝니다. 같은 프롬프트를 ChatGPT나 Microsoft Designer 무료 계정에 붙여 넣어 결과를 비교해 봐도 좋습니다.</p>
+              <p class="hint" id="aiLink"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="sec-h"><h3>비슷한 감성의 시</h3><p>감정 벡터 코사인 유사도 기준</p></div>
+        <div class="recs" id="recs"></div>
+      </section>
+
+      <section class="grid2">
+        <div class="sheet">
+          <div class="sec-h"><h3>감성 지도</h3><p>감정 벡터를 2차원으로 투영(PCA)</p></div>
+          <div id="map"></div>
+          <div class="legend" id="mapLegend"></div>
+          <dl class="axis-guide" id="mapGuide"></dl>
+        </div>
+        <div class="sheet">
+          <div class="sec-h"><h3>전체 비교</h3><p>시 × 정서 비율(%) · 행을 누르면 이동</p></div>
+          <div class="scroll"><table class="heat" id="heat"></table></div>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="sec-h"><h3>감정 범주와 정의</h3><p>8개 범주 · 범주마다 감정 사전 시어 15개 이상</p></div>
+        <dl class="defs" id="emodefs"></dl>
+        <div class="btnrow" style="margin-top:16px"><button type="button" class="btn ghost" id="exportJson">분석 결과 JSON 내려받기 (results.json)</button></div>
+        <p class="hint" style="margin-top:8px">현재 가중치로 계산한 전체 결과를 기술명세서 3.4 형식(vec, dominant, lines, method)으로 저장합니다.</p>
+      </section>
+
+      <footer>
+        <p><b>저작권 안내</b> · 수록 작품은 모두 시인이 1962년 이전에 세상을 떠나 저작권 보호기간이 끝난 작품입니다. 본문 표기는 고등학교 국어 교과서에 널리 실린 현대 표기를 따랐습니다.</p>
+        <ul class="srclist" id="sources"></ul>
+        <p>감정 사전 점수는 시어의 부분 문자열 일치로 계산하므로 문맥과 다른 일치(오탐)가 생길 수 있습니다. 해석 기반 프로필은 작품 해석을 바탕으로 정서 강도를 0–1로 정한 값입니다. 화면 구성과 코드는 수업 예시 앱(seokhee5hs/korean-poetry-emotion-map)을 바탕으로 수정했습니다.</p>
+      </footer>
+    </main>
+  </div>
+</div>
+<div id="tip" role="tooltip"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
